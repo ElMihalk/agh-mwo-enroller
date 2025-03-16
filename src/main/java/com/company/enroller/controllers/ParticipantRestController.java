@@ -65,7 +65,7 @@ public class ParticipantRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@RequestMapping(value = "/sort", method = RequestMethod.GET)
 	public ResponseEntity<?> getSortedParticipants(@RequestParam String sortBy, @RequestParam(defaultValue="ASC", required = false) String sortOrder) {
 		Collection<Participant> participants = participantService.getAll();
 		Collection<String> logins = new ArrayList<>();
