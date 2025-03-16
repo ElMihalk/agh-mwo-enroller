@@ -1,6 +1,8 @@
 package com.company.enroller.controllers;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -63,8 +65,13 @@ public class ParticipantRestController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//	@RequestMapping(value = "", method = RequestMethod.GET)
-//	public ResponseEntity<?> getSortedParticipants(@RequestParam(value="sortBy")){}
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public ResponseEntity<?> getSortedParticipants(@RequestParam String sortBy, @RequestParam(defaultValue="ASC", required = false) String sortOrder) {
+		Collection<Participant> participants = participantService.getAll();
+		Collection<String> logins = new ArrayList<>();
+		logins = participants.stream().map(Participant::getLogin).sorted().collect(Collectors.toList());
+		return new ResponseEntity<Collection<String>>(logins, HttpStatus.OK);
+	}
 }
 
 
